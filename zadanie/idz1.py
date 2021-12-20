@@ -4,82 +4,71 @@
 import sys
 
 if __name__ == '__main__':
-    # Список людей.
     humans = []
-
-    # Организовать бесконечный цикл запроса команд.
+    print('Список комманд: \n exit \n add \n list \n select')
+    line = '+-{}-+-{}-+-{}-+-{}-+'.format(
+        '-' * 4,
+        '-' * 20,
+        '-' * 15,
+        '-' * 16
+    )
     while True:
-        # Запросить команду из терминала.
-        command = input(">>> ").lower()
-
-        # Выполнить действие в соответствие с командой.
-        if command == 'exit':
+        com = input('Введите команду: ').lower()
+        if com == 'exit':
             break
-
-        elif command == 'add':
-            # Запросить данные о человеке.
-            name = input("Фамилия и инициалы? ")
-            zodiac = input("Знак Зодиака? ")
-            Birthdate = list(map(int, input("Дата рождения? ").split()))
-            # Создать словарь.
+        elif com == "add":
+            name = input('Введите Ф.И.О.: ')
+            zodiac = input('Введите знак зодиака: ')
+            birthdate = input('Введите дату рождения: ')
             human = {
                 'name': name,
                 'zodiac': zodiac,
-                'Birthdate': Birthdate,
+                'birthdate': birthdate
             }
-            # Добавить словарь в список.
             humans.append(human)
-            # Отсортировать список в случае необходимости.
             if len(humans) > 1:
-                humans.sort(key=lambda x: x.get('Birthdate')[::-1])
-
-        elif command == 'list':
-            # Заголовок таблицы.
-            line = '+-{}-+-{}-+-{}-+-{}-+'.format(
-                '-' * 4,
-                '-' * 30,
-                '-' * 20,
-                '-' * 15
-            )
+                humans.sort(key=lambda x: x.get('birthdate', ''))
+        elif com == 'list':
             print(line)
             print(
-                '| {:^4} | {:^30} | {:^20} | {:^15} |'.format(
+                '| {:^4} | {:^20} | {:^15} | {:^16} |'.format(
                     "№",
                     "Ф.И.О.",
                     "Знак Зодиака",
-                    "Дата рождения"
-                )
-            )
+                    "Дата рождения"))
             print(line)
-
-            # Вывести данные о всех людях.
-            for idx, human in enumerate(humans, 1):
+            for idx, worker in enumerate(humans, 1):
                 print(
-                    '| {:>4} | {:<30} | {:<20} | {:>15} |'.format(
+                    '| {:<4} | {:<20} | {:<15} | {:<16} |'.format(
                         idx,
-                        human['name'],
-                        human['zodiac'],
-                        # переводим дату рождения в строку
-                        ' '.join((str(i) for i in human['Birthdate']))
+                        worker.get('name', ''),
+                        worker.get('zodiac', ''),
+                        worker.get('birthdate', 0)
                     )
                 )
             print(line)
-        elif command == 'whois':
-
-            who = input('Кого ищем?: ')
-            flag = 0
-            for human in humans:
-                if who in human:
-                    flag = 1
-            if not flag:
-                print('Не найдено')
-        elif command == 'help':
-            # Вывести справку о работе с программой.
-            print("Список команд:\n")
-            print("add - добавить работника;")
-            print("list - вывести список работников;")
-            print("whois - вывести нужного работника;")
-            print("help - отобразить справку;")
-            print("exit - завершить работу с программой.")
+        elif com == 'select':
+            nom = input('Введите дату рождения: ')
+            count = 0
+            print(line)
+            print(
+                '| {:^4} | {:^20} | {:^15} | {:^16} |'.format(
+                    "№",
+                    "Ф.И.О.",
+                    "Знак Зодиака",
+                    "Дата рождения"))
+            print(line)
+            for i, num in enumerate(humans, 1):
+                if nom == num.get('birthdate', ''):
+                    count += 1
+                    print(
+                        '| {:<4} | {:<20} | {:<15} | {:<16} |'.format(
+                            count,
+                            num.get('name', ''),
+                            num.get('zodiac', ''),
+                            num.get('birthdate', 0)))
+            print(line)
+            if count == 0:
+                print('Таких людей нет')
         else:
-            print('Неизвестная команда', command, file=sys.stderr)
+            print(f"Неизвестная команда {com}", file=sys.stderr)

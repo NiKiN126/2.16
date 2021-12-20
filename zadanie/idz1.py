@@ -20,18 +20,18 @@ if __name__ == '__main__':
             # Запросить данные о человеке.
             name = input("Фамилия и инициалы? ")
             zodiac = input("Знак Зодиака? ")
-            year = list(map(int, input("Дата рождения? ").split()))
+            Birthday = list(map(int, input("Дата рождения? ").split()))
             # Создать словарь.
             human = {
                 'name': name,
                 'zodiac': zodiac,
-                'year': year,
+                'Birthday': Birthday,
             }
             # Добавить словарь в список.
             humans.append(human)
             # Отсортировать список в случае необходимости.
             if len(humans) > 1:
-                humans.sort(key=lambda x: x.get('year')[::-1])
+                humans.sort(key=lambda x: x.get('Birthday')[::-1])
 
         elif command == 'list':
             # Заголовок таблицы.
@@ -60,7 +60,7 @@ if __name__ == '__main__':
                         human['name'],
                         human['zodiac'],
                         # переводим дату рождения в строку
-                        ' '.join((str(i) for i in human['year']))
+                        ' '.join((str(i) for i in human['Birthday']))
                     )
                 )
             print(line)
@@ -71,9 +71,6 @@ if __name__ == '__main__':
             for human in humans:
                 if who in human:
                     flag = 1
-                    input(zodiac)
-                    input(name)
-                    input(year)
             if not flag:
                 print('Не найдено')
         elif command == 'help':

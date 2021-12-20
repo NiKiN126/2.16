@@ -3,6 +3,8 @@
 
 from datetime import date
 import sys
+from typing import Dict, Union, List
+
 if __name__ == '__main__':
     # Список работников.
     workers = []
@@ -16,14 +18,10 @@ if __name__ == '__main__':
         elif command == 'add':
             # Запросить данные о работнике.
             name = input("Фамилия и инициалы? ")
-            post = input("Должность? ")
-            year = int(input("Год поступления? "))
+            zodiak = input("Знак Зодиака? ")
+            year = list(map(int, input("Дата рождения? ").split()))
             # Создать словарь.
-            worker = {
-            'name': name,
-            'post': post,
-            'year': year,
-            }
+            worker = dict(name=name, zodiac=zodiak, year=year)
             # Добавить словарь в список.
             workers.append(worker)
             # Отсортировать список в случае необходимости.
@@ -32,28 +30,19 @@ if __name__ == '__main__':
         elif command == 'list':
             # Заголовок таблицы.
             line = '+-{}-+-{}-+-{}-+-{}-+'.format(
-            '-' * 4,
-            '-' * 30,
-            '-' * 20,
-            '-' * 8
+                '-' * 4,
+                '-' * 30,
+                '-' * 20,
+                '-' * 8
             )
             print(line)
             print(
-            '| {:^4} | {:^30} | {:^20} | {:^8} |'.format(
-            "№",
-            "Ф.И.О.",
-            "Должность",
-            "Год"))
+                f"| {'№':^4} | {'Знак зодиака':^30} | {'Ф.И.О.':^20} | {'Дата рождения':^8} |")
             print(line)
             # Вывести данные о всех сотрудниках.
             for idx, worker in enumerate(workers, 1):
                 print(
-                    '| {:>4} | {:<30} | {:<20} | {:>8} |'.format(
-                        idx,
-                        worker.get('name', ''),
-                        worker.get('post', ''),
-                        worker.get('year', 0)
-                    )
+                    f'| {idx:>4} | {worker.get("name", ""):<30} | {worker.get("post", ""):<20} | {worker.get("year", 0):>8} |'
                 )
             print(line)
         elif command.startswith('select '):
@@ -66,11 +55,12 @@ if __name__ == '__main__':
             # Инициализировать счетчик.
             count = 0
             # Проверить сведения работников из списка.
+            worker: Dict[str, Union[str, List[int]]]
             for worker in workers:
                 if today.year - worker.get('year', today.year) >= period:
                     count += 1
                 print(
-                '{:>4}: {}'.format(count, worker.get('name', ''))
+                    '{:>4}: {}'.format(count, worker.get('name', ''))
                 )
             # Если счетчик равен 0, то работники не найдены.
             if count == 0:

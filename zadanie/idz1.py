@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import sys
 
 if __name__ == '__main__':
-    # Список работников.
-    workers = []
+    # Список людей.
+    humans = []
 
     # Организовать бесконечный цикл запроса команд.
     while True:
@@ -16,24 +17,21 @@ if __name__ == '__main__':
             break
 
         elif command == 'add':
-            # Запросить данные о работнике.
+            # Запросить данные о человеке.
             name = input("Фамилия и инициалы? ")
             zodiac = input("Знак Зодиака? ")
             year = list(map(int, input("Дата рождения? ").split()))
             # Создать словарь.
-            worker = {
+            human = {
                 'name': name,
                 'zodiac': zodiac,
                 'year': year,
             }
             # Добавить словарь в список.
-            workers.append(worker)
+            humans.append(human)
             # Отсортировать список в случае необходимости.
-            if len(workers) > 1:
-                # сортировка -> нужно, чтобы 22 1 2000 раньше 1 2 2000
-                # workers.sort(key=lambda x : x.get('year') -> тут сортировка
-                # по первому элементу, затем по второму и тд. Поэтому:
-                workers.sort(key=lambda x: x.get('year')[::-1])
+            if len(humans) > 1:
+                humans.sort(key=lambda x: x.get('year')[::-1])
 
         elif command == 'list':
             # Заголовок таблицы.
@@ -54,15 +52,15 @@ if __name__ == '__main__':
             )
             print(line)
 
-            # Вывести данные о всех сотрудниках.
-            for idx, worker in enumerate(workers, 1):
+            # Вывести данные о всех людях.
+            for idx, human in enumerate(humans, 1):
                 print(
                     '| {:>4} | {:<30} | {:<20} | {:>15} |'.format(
                         idx,
-                        worker['name'],
-                        worker['zodiac'],
+                        human['name'],
+                        human['zodiac'],
                         # переводим дату рождения в строку
-                        ' '.join((str(i) for i in worker['year']))
+                        ' '.join((str(i) for i in human['year']))
                     )
                 )
             print(line)
@@ -70,11 +68,12 @@ if __name__ == '__main__':
 
             who = input('Кого ищем?: ')
             flag = 0
-            for worker in workers:
-                if who in worker:
+            for human in humans:
+                if who in human:
                     flag = 1
-                    info(workers, who)
-
+                    input(zodiac)
+                    input(name)
+                    input(year)
             if not flag:
                 print('Не найдено')
         elif command == 'help':

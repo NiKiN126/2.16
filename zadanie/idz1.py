@@ -19,15 +19,19 @@ if __name__ == '__main__':
         elif com == "add":
             name = input('Введите Ф.И.О.: ')
             zodiac = input('Введите знак зодиака: ')
-            birthdate = input('Введите дату рождения: ')
+            daytime = input('Введите дату рождения: ')
+            day = daytime.find("/")
+            month = daytime.find("/")
+            year = daytime.find("/")
             human = {
                 'name': name,
                 'zodiac': zodiac,
-                'birthdate': birthdate
+                'daytime': daytime
+
             }
             humans.append(human)
             if len(humans) > 1:
-                humans.sort(key=lambda x: x.get('birthdate', ''))
+                humans.sort(key=lambda x: x.get('daytime', ''))
         elif com == 'list':
             print(line)
             print(
@@ -37,13 +41,13 @@ if __name__ == '__main__':
                     "Знак Зодиака",
                     "Дата рождения"))
             print(line)
-            for idx, worker in enumerate(humans, 1):
+            for idx, human in enumerate(humans, 1):
                 print(
                     '| {:<4} | {:<20} | {:<15} | {:<16} |'.format(
                         idx,
-                        worker.get('name', ''),
-                        worker.get('zodiac', ''),
-                        worker.get('birthdate', 0)
+                        human.get('name', ''),
+                        human.get('zodiac', ''),
+                        human.get('daytime', 0)
                     )
                 )
             print(line)
@@ -59,14 +63,14 @@ if __name__ == '__main__':
                     "Дата рождения"))
             print(line)
             for i, num in enumerate(humans, 1):
-                if nom == num.get('birthdate', ''):
+                if nom == num.get('daytime', ''):
                     count += 1
                     print(
                         '| {:<4} | {:<20} | {:<15} | {:<16} |'.format(
                             count,
                             num.get('name', ''),
                             num.get('zodiac', ''),
-                            num.get('birthdate', 0)))
+                            num.get('daytime', 0)))
             print(line)
             if count == 0:
                 print('Таких людей нет')

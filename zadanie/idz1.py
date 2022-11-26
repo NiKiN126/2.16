@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from datetime import date
+import datetime
 
 if __name__ == '__main__':
     humans = []
@@ -19,16 +21,16 @@ if __name__ == '__main__':
         elif com == "add":
             name = input('Введите Ф.И.О.: ')
             zodiac = input('Введите знак зодиака: ')
-            daytime = input('Введите дату рождения: ')
-            day = daytime.find("/")
-            month = daytime.find("/")
-            year = daytime.find("/")
+            daytime = input('Введите дату рождения: (dd/mm/yyyy)\n')
+            date = datetime.datetime.strptime(daytime, '%d/%m/%Y').date()
+
             human = {
                 'name': name,
                 'zodiac': zodiac,
                 'daytime': daytime
 
             }
+
             humans.append(human)
             if len(humans) > 1:
                 humans.sort(key=lambda x: x.get('daytime', ''))
@@ -41,6 +43,7 @@ if __name__ == '__main__':
                     "Знак Зодиака",
                     "Дата рождения"))
             print(line)
+
             for idx, human in enumerate(humans, 1):
                 print(
                     '| {:<4} | {:<20} | {:<15} | {:<16} |'.format(
@@ -51,6 +54,7 @@ if __name__ == '__main__':
                     )
                 )
             print(line)
+
         elif com == 'select':
             nom = input('Введите дату рождения: ')
             count = 0
@@ -62,6 +66,7 @@ if __name__ == '__main__':
                     "Знак Зодиака",
                     "Дата рождения"))
             print(line)
+
             for i, num in enumerate(humans, 1):
                 if nom == num.get('daytime', ''):
                     count += 1
@@ -72,6 +77,7 @@ if __name__ == '__main__':
                             num.get('zodiac', ''),
                             num.get('daytime', 0)))
             print(line)
+
             if count == 0:
                 print('Таких людей нет')
         else:
